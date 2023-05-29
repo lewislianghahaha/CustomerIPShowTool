@@ -188,7 +188,7 @@
             this.Controls.Add(this.dtStr);
             this.Controls.Add(this.label1);
             this.Name = "Main";
-            this.Text = "配方客户API明细信息导出工具";
+            this.Text = "配方账号登录日志导出工具";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
