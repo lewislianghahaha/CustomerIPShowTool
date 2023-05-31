@@ -15,11 +15,11 @@ namespace CustomerIPShowTool.Task
         private string _city = "";
 
         //定义数据集
-        private DataTable _tempsourcedt;
+       // private DataTable _tempsourcedt;
         //定义行ID，当要跳出TIME时使用,每次执行完成后会自增
-        private int _rowid=0;
+       // private int _rowid=0;
 
-        private static Timer _timer;
+       // private static Timer _timer;
 
         /// <summary>
         /// 根据相关值获取API并返回导出DT
@@ -31,18 +31,61 @@ namespace CustomerIPShowTool.Task
         {
             try
             {
-                _tempsourcedt = sourcedt.Copy();
+               // _tempsourcedt = sourcedt.Copy();
+                foreach (DataRow rows in sourcedt.Rows)
+                {
+                    //循环获取IP相关值
+                    var ip = Convert.ToString(rows[3]);
+                    //todo:一定要这一句,不然会出现:"未能创建SSL/TLS安全通道"异常
+                    System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                    //设置API所需的固定值
+                    var appid = "smoqhweyvektrngi";
+                    var appsecret = "Q3hJam9qRHJyTStqSmlMU2xyNlFuUT09";
 
-                //设置时间间隔为100000毫秒(1分钟)
-                _timer = new Timer(100000);
-                //设置启动计时器(可不需要)
-                //_timer.Start();
-                //Elapsed事件,用于定义要执行的代码(重)
-                _timer.Elapsed += Timer_Elapsed;
-                //设置Timer自动重置 
-                _timer.AutoReset = true;
-                //启用Timer 
-                _timer.Enabled = true;
+                    var serviceUrl = $"https://www.mxnzp.com/api/ip/aim_ip?ip={ip}&app_id={appid}&app_secret={appsecret}";
+
+                    var client = new RestClient(serviceUrl);
+                    var request = new RestRequest();
+
+                    //请求方式
+                    request.Method = Method.Get;
+                    //执行调用API
+                    var response = client.Execute(request);
+
+                    //todo:返回状态(OK是正常,再继续)
+                    if (Convert.ToString(response.StatusCode) == "OK")
+                    {
+                        //todo:返回内容并进行分析,获取需要的值(重)
+                        AnalysisJson(response.Content);
+                        //todo:将相关记录收集至GlobalClasscs.RmMessage.ExportDt内
+                        var newrow = GlobalClasscs.RmMessage.ExportDt.NewRow();
+                        newrow[0] = Convert.ToString(rows[0]);    //账号编码
+                        newrow[1] = Convert.ToString(rows[1]);    //账号名称
+                        newrow[2] = Convert.ToString(rows[2]);    //客户端类型
+                        newrow[3] = ip;                           //访问IP
+                        newrow[4] = Convert.ToString(rows[4]);    //访问日期
+                        newrow[5] = _city;                        //IP所属地区(城市)
+                        newrow[6] = _contect;                     //IP所属通讯服务商
+                        GlobalClasscs.RmMessage.ExportDt.Rows.Add(newrow);
+                    }
+                    //延时0.8分钟再执行
+                    System.Threading.Thread.Sleep(500);
+                    var a = GlobalClasscs.RmMessage.ExportDt.Copy();
+                }
+
+
+                #region xx
+                ////设置时间间隔为100000毫秒(1分钟)
+                //_timer = new Timer(100000);
+                ////设置启动计时器(可不需要)
+                ////_timer.Start();
+                ////Elapsed事件,用于定义要执行的代码(重)
+                //_timer.Elapsed += Timer_Elapsed;
+                ////设置Timer自动重置 
+                //_timer.AutoReset = true;
+                ////启用Timer 
+                //_timer.Enabled = true;
+                #endregion
             }
             catch (Exception ex)
             {

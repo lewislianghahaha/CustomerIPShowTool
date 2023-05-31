@@ -43,9 +43,9 @@ namespace CustomerIPShowTool.Task
                 }
                 else
                 {
-                    aa(sourcedt);
+                    getApiRecord.GetExportDt(sourcedt);
                     //todo:将输出DT生成EXCEL并输出
-                   // result = exportDt.ExportDtToExcel(fileAddress, GlobalClasscs.RmMessage.ExportDt);
+                    result = exportDt.ExportDtToExcel(fileAddress, GlobalClasscs.RmMessage.ExportDt);
                 }
             }
             catch (Exception)
@@ -54,11 +54,6 @@ namespace CustomerIPShowTool.Task
             }
 
             return result;
-        }
-
-        private void aa(DataTable sourcedt)
-        {
-            getApiRecord.GetExportDt(sourcedt);
         }
     }
 }
