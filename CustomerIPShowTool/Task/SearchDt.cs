@@ -21,7 +21,7 @@ namespace CustomerIPShowTool.Task
 
             try
             {
-                var sqlDataAdapter = new SqlDataAdapter(sqlscript, conDb.GetK3CloudConn());
+                var sqlDataAdapter = new SqlDataAdapter(sqlscript, conDb.GetCloudConn());
                 sqlDataAdapter.Fill(resultdt);
             }
             catch (Exception)
@@ -34,19 +34,30 @@ namespace CustomerIPShowTool.Task
         }
 
         /// <summary>
-        /// 根据指定条件获取配方系统登录日志信息
+        /// 根据指定条件获取配方系统登录日志信息(国内)
         /// </summary>
         /// <param name="sdt"></param>
         /// <param name="edt"></param>
         /// <param name="clienttype"></param>
         /// <returns></returns>
-        public DataTable GetCustomerLoginRecord(string sdt, string edt, string clienttype)
+        public DataTable GetCustomerLoginRecordCn(string sdt, string edt, string clienttype)
         {
-            var dt = UseSqlSearchIntoDt(sqlList.GetCustomerLoginRecord(sdt, edt, clienttype));
+            var dt = UseSqlSearchIntoDt(sqlList.GetCustomerLoginRecord_CN(sdt, edt, clienttype));
             return dt;
         }
 
-
+        /// <summary>
+        /// 根据指定条件获取配方系统登录日志信息(海外)
+        /// </summary>
+        /// <param name="sdt"></param>
+        /// <param name="edt"></param>
+        /// <param name="clienttype"></param>
+        /// <returns></returns>
+        public DataTable GetCustomerLoginRecordFor(string sdt, string edt, string clienttype)
+        {
+            var dt = UseSqlSearchIntoDt(sqlList.GetCustomerLoginRecord_For(sdt, edt, clienttype));
+            return dt;
+        }
 
     }
 }

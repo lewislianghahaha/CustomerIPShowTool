@@ -13,7 +13,7 @@ namespace CustomerIPShowTool.DB
         public DataTable MakeExportDtTemp()
         {
             var dt = new DataTable();
-            for (var i = 0; i < 6; i++)
+            for (var i = 0; i < 7; i++)
             {
                 var dc = new DataColumn();
                 switch (i)
@@ -27,18 +27,22 @@ namespace CustomerIPShowTool.DB
                         dc.DataType = Type.GetType("System.String");
                         break;
                     case 2:
-                        dc.ColumnName = "订问IP";
+                        dc.ColumnName = "客户端类型";
                         dc.DataType = Type.GetType("System.String");
                         break;
                     case 3:
-                        dc.ColumnName = "访问日期";
+                        dc.ColumnName = "访问IP";
                         dc.DataType = Type.GetType("System.String");
                         break;
                     case 4:
-                        dc.ColumnName = "IP所属地区(城市)";
+                        dc.ColumnName = "访问日期";
                         dc.DataType = Type.GetType("System.String");
                         break;
                     case 5:
+                        dc.ColumnName = "IP所属地区(城市)";
+                        dc.DataType = Type.GetType("System.String");
+                        break;
+                    case 6:
                         dc.ColumnName = "IP所属通讯服务商";
                         dc.DataType = Type.GetType("System.String");
                         break;
@@ -47,5 +51,6 @@ namespace CustomerIPShowTool.DB
             }
             return dt;
         }
+ 
     }
 }
