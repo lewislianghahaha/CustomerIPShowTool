@@ -15,11 +15,11 @@ namespace CustomerIPShowTool.Task
         private string _city = "";
 
         //定义数据集
-       // private DataTable _tempsourcedt;
+        private DataTable _tempsourcedt;
         //定义行ID，当要跳出TIME时使用,每次执行完成后会自增
-       // private int _rowid=0;
+        private int _rowid = 0;
 
-       // private static Timer _timer;
+        private static Timer _timer;
 
         /// <summary>
         /// 根据相关值获取API并返回导出DT
@@ -68,9 +68,9 @@ namespace CustomerIPShowTool.Task
                         newrow[6] = _contect;                     //IP所属通讯服务商
                         GlobalClasscs.RmMessage.ExportDt.Rows.Add(newrow);
                     }
-                    //延时0.8分钟再执行
+                    //延时0.008分钟再执行
                     System.Threading.Thread.Sleep(500);
-                    var a = GlobalClasscs.RmMessage.ExportDt.Copy();
+                    //var a = GlobalClasscs.RmMessage.ExportDt.Copy();
                 }
 
 
