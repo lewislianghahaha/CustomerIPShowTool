@@ -69,7 +69,7 @@ namespace CustomerIPShowTool.Task
                         GlobalClasscs.RmMessage.ExportDt.Rows.Add(newrow);
                     }
                     //延时0.008分钟再执行
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(1000);
                     //var a = GlobalClasscs.RmMessage.ExportDt.Copy();
                 }
 
